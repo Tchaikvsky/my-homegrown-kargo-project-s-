@@ -1,0 +1,19 @@
+# app-of-apps.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: istio-apps
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Tchaikvsky/my-homegrown-kargo-project-s-.git
+    targetRevision: main
+    path: istio-gitops/apps
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

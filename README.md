@@ -7,6 +7,7 @@ Going to build out some Kargo projects to get more familiar with everything. I'v
 - add a cluster add-on like Kyverno, Prometheus, Secret Manager, Service Mesh (e.g Istio)
 - deploy with Kustomize/Helm/Etc.
 - Build a pipeline
+-Rinse & repeate with other addons and projects
 
 ##
 

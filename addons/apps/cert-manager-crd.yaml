@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cert-manager-crds
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/Tchaikvsky/my-homegrown-kargo-project-s-.git
+    targetRevision: main
+    path: infrastructure/cert-manager/crds
+  destination:
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
+      - Replace=true
+      # Never prune CRDs - deleting them removes all certificates
+      - Prune=false

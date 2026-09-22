@@ -1,24 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cert-manager
+  name: cert-manager-crds
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
 spec:
   project: default
   source:
-    repoURL: https://charts.jetstack.io
-    chart: cert-manager
-    targetRevision: v1.16.2
-    helm:
-      valuesObject:
-        crds:
-          enabled: true
+    repoURL: https://github.com/your-org/platform-gitops.git
+    targetRevision: main
+    path: infrastructure/cert-manager/crds
   destination:
     server: https://kubernetes.default.svc
-    namespace: cert-manager
   syncPolicy:
     automated:
-      prune: true
       selfHeal: true
     syncOptions:
-      - CreateNamespace=true
+      - ServerSideApply=true
+      - Replace=true
+      # Never prune CRDs - deleting them removes all certificates
+      - Prune=false
